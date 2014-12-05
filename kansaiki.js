@@ -11,8 +11,8 @@ var isGetSky = true;
 /* 艦種ごとの編成に入れる隻数 */
 /* 以下を満たして設定してください */
 
-var numOfSekikubo = 6;	/*正規空母*/ /*装甲空母は正規空母にカウントします*/
-var numOfKeikubo = 0;	/*軽空母*/
+var numOfSekikubo = 0;	/*正規空母*/ /*装甲空母は正規空母にカウントします*/
+var numOfKeikubo = 6;	/*軽空母*/
 
 var numOfKokusen = 0;	/*航空戦艦*/
 var numOfKokujun = 0;	/*航空巡洋艦*/
@@ -406,42 +406,78 @@ for(var key in kokukanInput){
 	}
 }
 /* 艦種ごとの一覧と組合せを作る */
-if(numOfSekikubo != 0){
-	var sekikubo = kokukan.filter(function(value, index){
-		return isSekikubo(value['name']);
-	});
-	var sekikuboCombi = sekikubo.combinations(numOfSekikubo);
-	for(var key in sekikuboCombi){
-		for(var i=0; i<key.length-1; i++){
-			for(var j=i+1; j<key.length; j++){
-				if(checkIdentify(sekikuboCombi[key][i],sekikuboCombi[key][j]))
-					delete sekikuboCombi[key];
-			}
+var sekikubo = kokukan.filter(function(value, index){
+	return isSekikubo(value['name']);
+});
+var sekikuboCombi = sekikubo.combinations(numOfSekikubo);
+for(var key in sekikuboCombi){
+	for(var i=0; i<key.length-1; i++){
+		for(var j=i+1; j<key.length; j++){
+			if(checkIdentify(sekikuboCombi[key][i],sekikuboCombi[key][j]))
+				delete sekikuboCombi[key];
 		}
 	}
-	console.log(sekikuboCombi);
 }
-if(numOfKeikubo != 0){
-	var keikubo = kokukan.filter(function(value, index){
-		return isKeikubo(value['name']);
-	});
-	var keikuboCombi = keikubo.combinations(numOfKeikubo);
-	// console.log(keikuboCombi);
+// console.log(sekikuboCombi);
+
+var keikubo = kokukan.filter(function(value, index){
+	return isKeikubo(value['name']);
+});
+var keikuboCombi = keikubo.combinations(numOfKeikubo);
+for(var key in keikuboCombi){
+	for(var i=0; i<key.length-1; i++){
+		for(var j=i+1; j<key.length; j++){
+			if(checkIdentify(keikuboCombi[key][i],keikuboCombi[key][j]))
+				delete keikuboCombi[key];
+		}
+	}
 }
-if(numOfKokusen != 0){
-	var kokusen = kokukan.filter(function(value, index){
-		return isKokusen(value['name']);
-	});
-	var kokusenCombi = kokusen.combinations(numOfKokusen);
-	// console.log(kokusenCombi);
+// console.log(keikuboCombi);
+
+var kokusen = kokukan.filter(function(value, index){
+	return isKokusen(value['name']);
+});
+for(var key in kokusenCombi){
+	for(var i=0; i<key.length-1; i++){
+		for(var j=i+1; j<key.length; j++){
+			if(checkIdentify(kokusenCombi[key][i],kokusenCombi[key][j]))
+				delete kokusenCombi[key];
+		}
+	}
 }
-if(numOfKokujun != 0){
-	var kokujun = kokukan.filter(function(value, index){
-		return isKokujun(value['name']);
-	});
-	var kokujunCombi = kokujun.combinations(numOfKokujun);
-	// console.log(kokujunCombi);
+var kokusenCombi = kokusen.combinations(numOfKokusen);
+// console.log(kokusenCombi);
+
+var kokujun = kokukan.filter(function(value, index){
+	return isKokujun(value['name']);
+});
+for(var key in kokujunCombi){
+	for(var i=0; i<key.length-1; i++){
+		for(var j=i+1; j<key.length; j++){
+			if(checkIdentify(kokujunCombi[key][i],kokujunCombi[key][j]))
+				delete kokujunCombi[key];
+		}
+	}
 }
+var kokujunCombi = kokujun.combinations(numOfKokujun);
+// console.log(kokujunCombi);
+
+/* 艦種ごとの組合せを統合した組合せ */
+var kokukanCombi = [];
+var sekiCL = sekikuboCombi.length;
+var keiCL = keikuboCombi.length;
+var senCL = kokusenCombi.length;
+var junCL = kokujunCombi.length;
+if(sekiCL == 0)	sekiCL = 1;	if(keiCL == 0)	keiCL = 1;
+if(senCL == 0)	senCL = 1;	if(junCL == 0)	junCL = 1;
+for(var seki=0; seki<=sekiCL; seki++){
+for(var kei=0; kei<=keiCL; kei++){
+for(var sen=0; sen<=senCL; sen++){
+for(var jun=0; jun<=junCL; jun++){
+	if(sekikuboCombi[seki]==undefined||keikuboCombi[kei]==undefined||kokusenCombi[sen]==undefined||kokujunCombi[jun]==undefined)	continue;
+	if(seki==sekiCL||kei==keiCL||sen==senCL||jun==junCL)	continue;
+	kokukanCombi.push([].concat(must).concat(sekikuboCombi[seki]).concat(keikuboCombi[kei]).concat(kokusenCombi[sen]).concat(kokujunCombi[jun]));
+}}}}
 
 /* 入力より装備可能な装備の一覧を作る */
 var kansaiki = [];
@@ -461,12 +497,10 @@ kansaiki.sort(function (a,b){
 	return y-x;
 })
 
-/* 指定した艦隊数での全ての航空艦の */
-
-//console.log(kokukan);
-//console.log(kansaiki);
-//console.log(kokukanCombi);
-
+//組み合わせ一覧
+console.log(kokukanCombi);
+//残り装備
+console.log(kansaiki);
 
 
 
