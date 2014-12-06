@@ -1,58 +1,383 @@
+0
 編成
 1 蒼龍改二
- Slot1 
- Slot2 烈風
- Slot3 
- Slot4 
+ Slot1 -1
+ Slot2 20
+ Slot3 18
+ Slot4 6
 2 飛龍改二
  Slot1 烈風改
- Slot2 
- Slot3 
- Slot4 
-3 瑞鶴改
+ Slot2 22
+ Slot3 18
+ Slot4 -2
+3 赤城改
+ Slot1 32
+ Slot2 20
+ Slot3 20
+ Slot4 10
+36 : 12
+1
+編成
+1 蒼龍改二
+ Slot1 -1
+ Slot2 20
+ Slot3 18
+ Slot4 6
+2 飛龍改二
+ Slot1 烈風改
+ Slot2 22
+ Slot3 18
+ Slot4 -2
+3 赤城改
  Slot1 烈風
- Slot2 
- Slot3 
- Slot4 
-制空戦力	165.71115440565936
+ Slot2 20
+ Slot3 20
+ Slot4 10
+32 : 10
+2
+編成
+1 蒼龍改二
+ Slot1 -1
+ Slot2 20
+ Slot3 18
+ Slot4 6
+2 飛龍改二
+ Slot1 烈風改
+ Slot2 烈風
+ Slot3 18
+ Slot4 -2
+3 赤城改
+ Slot1 烈風
+ Slot2 20
+ Slot3 20
+ Slot4 10
+22 : 10
+編成
+1 蒼龍改二
+ Slot1 -1
+ Slot2 20
+ Slot3 18
+ Slot4 6
+2 飛龍改二
+ Slot1 烈風改
+ Slot2 烈風
+ Slot3 18
+ Slot4 -2
+3 赤城改
+ Slot1 烈風
+ Slot2 20
+ Slot3 20
+ Slot4 10
+必要制空値: 146 / 制空戦力: 163.4727000931581
 
-[ { name: '烈風', AA: 10 },
-  { name: '烈風', AA: 10 },
-  { name: '烈風', AA: 10 },
-  { name: '烈風', AA: 10 },
-  { name: '烈風', AA: 10 },
-  { name: '烈風', AA: 10 },
-  { name: '烈風', AA: 10 },
-  { name: '烈風', AA: 10 },
-  { name: '零式艦戦21型(熟練)', AA: 8 },
-  { name: '零式艦戦21型(熟練)', AA: 8 },
-  { name: '零式艦戦62型(爆戦)', AA: 4 },
-  { name: '零式艦戦62型(爆戦)', AA: 4 },
-  { name: '零式艦戦62型(爆戦)', AA: 4 },
-  { name: '零式艦戦62型(爆戦)', AA: 4 },
-  { name: '零式艦戦62型(爆戦)', AA: 4 },
-  { name: '零式艦戦62型(爆戦)', AA: 4 },
-  { name: '零式艦戦62型(爆戦)', AA: 4 },
-  { name: '瑞雲(六三四空)', AA: 2 },
-  { name: '瑞雲(六三四空)', AA: 2 },
-  { name: '瑞雲(六三四空)', AA: 2 },
-  { name: '瑞雲', AA: 2 },
-  { name: '瑞雲', AA: 2 },
-  { name: '瑞雲', AA: 2 },
-  { name: '瑞雲', AA: 2 },
-  { name: '瑞雲', AA: 2 },
-  { name: '瑞雲', AA: 2 },
-  { name: '瑞雲', AA: 2 },
-  { name: '瑞雲', AA: 2 },
-  { name: '瑞雲', AA: 2 },
-  { name: '瑞雲', AA: 2 },
-  { name: '瑞雲', AA: 2 },
-  { name: '瑞雲', AA: 2 },
-  { name: '瑞雲', AA: 2 },
-  { name: '瑞雲', AA: 2 },
-  { name: '瑞雲', AA: 2 },
-  { name: '瑞雲', AA: 2 },
-  { name: '天山一二型(友永隊)', AA: 1 },
-  { name: '九七式艦攻(友永隊)', AA: 1 },
-  { name: '九九式艦爆(熟練)', AA: 1 },
-  { name: '彗星(江草隊)', AA: 1 } ]
+
+0
+編成
+1 蒼龍改二
+ Slot1 -1
+ Slot2 20
+ Slot3 18
+ Slot4 -2
+2 飛龍改二
+ Slot1 烈風改
+ Slot2 烈風
+ Slot3 18
+ Slot4 -2
+3 加賀改
+ Slot1 20
+ Slot2 20
+ Slot3 烈風改
+ Slot4 12
+46 : 12
+1
+編成
+1 蒼龍改二
+ Slot1 -1
+ Slot2 烈風
+ Slot3 18
+ Slot4 -2
+2 飛龍改二
+ Slot1 烈風改
+ Slot2 烈風
+ Slot3 18
+ Slot4 -2
+3 加賀改
+ Slot1 20
+ Slot2 20
+ Slot3 烈風改
+ Slot4 12
+20 : 10
+2
+編成
+1 蒼龍改二
+ Slot1 -1
+ Slot2 烈風
+ Slot3 18
+ Slot4 -2
+2 飛龍改二
+ Slot1 烈風改
+ Slot2 烈風
+ Slot3 18
+ Slot4 -2
+3 加賀改
+ Slot1 烈風
+ Slot2 20
+ Slot3 烈風改
+ Slot4 12
+20 : 10
+編成
+1 蒼龍改二
+ Slot1 -1
+ Slot2 烈風
+ Slot3 18
+ Slot4 -2
+2 飛龍改二
+ Slot1 烈風改
+ Slot2 烈風
+ Slot3 18
+ Slot4 -2
+3 加賀改
+ Slot1 烈風
+ Slot2 20
+ Slot3 烈風改
+ Slot4 12
+必要制空値: 146 / 制空戦力: 157.26601893124428
+
+
+0
+編成
+1 蒼龍改二
+ Slot1 -1
+ Slot2 烈風
+ Slot3 18
+ Slot4 -2
+2 飛龍改二
+ Slot1 烈風改
+ Slot2 烈風
+ Slot3 18
+ Slot4 -2
+3 翔鶴改
+ Slot1 烈風改
+ Slot2 24
+ Slot3 24
+ Slot4 -2
+24 : 12
+1
+編成
+1 蒼龍改二
+ Slot1 -1
+ Slot2 烈風
+ Slot3 18
+ Slot4 -2
+2 飛龍改二
+ Slot1 烈風改
+ Slot2 烈風
+ Slot3 18
+ Slot4 -2
+3 翔鶴改
+ Slot1 烈風改
+ Slot2 烈風
+ Slot3 24
+ Slot4 -2
+24 : 10
+2
+編成
+1 蒼龍改二
+ Slot1 -1
+ Slot2 烈風
+ Slot3 18
+ Slot4 -2
+2 飛龍改二
+ Slot1 烈風改
+ Slot2 烈風
+ Slot3 18
+ Slot4 -2
+3 翔鶴改
+ Slot1 烈風改
+ Slot2 烈風
+ Slot3 烈風
+ Slot4 -2
+24 : 10
+編成
+1 蒼龍改二
+ Slot1 -1
+ Slot2 烈風
+ Slot3 18
+ Slot4 -2
+2 飛龍改二
+ Slot1 烈風改
+ Slot2 烈風
+ Slot3 18
+ Slot4 -2
+3 翔鶴改
+ Slot1 烈風改
+ Slot2 烈風
+ Slot3 烈風
+ Slot4 -2
+必要制空値: 146 / 制空戦力: 146.9693845669907
+
+
+0
+編成
+1 蒼龍改二
+ Slot1 -1
+ Slot2 烈風
+ Slot3 18
+ Slot4 -2
+2 飛龍改二
+ Slot1 烈風改
+ Slot2 烈風
+ Slot3 18
+ Slot4 -2
+3 瑞鶴改
+ Slot1 烈風改
+ Slot2 24
+ Slot3 24
+ Slot4 -2
+24 : 12
+1
+編成
+1 蒼龍改二
+ Slot1 -1
+ Slot2 烈風
+ Slot3 18
+ Slot4 -2
+2 飛龍改二
+ Slot1 烈風改
+ Slot2 烈風
+ Slot3 18
+ Slot4 -2
+3 瑞鶴改
+ Slot1 烈風改
+ Slot2 烈風
+ Slot3 24
+ Slot4 -2
+24 : 10
+2
+編成
+1 蒼龍改二
+ Slot1 -1
+ Slot2 烈風
+ Slot3 18
+ Slot4 -2
+2 飛龍改二
+ Slot1 烈風改
+ Slot2 烈風
+ Slot3 18
+ Slot4 -2
+3 瑞鶴改
+ Slot1 烈風改
+ Slot2 烈風
+ Slot3 烈風
+ Slot4 -2
+24 : 10
+編成
+1 蒼龍改二
+ Slot1 -1
+ Slot2 烈風
+ Slot3 18
+ Slot4 -2
+2 飛龍改二
+ Slot1 烈風改
+ Slot2 烈風
+ Slot3 18
+ Slot4 -2
+3 瑞鶴改
+ Slot1 烈風改
+ Slot2 烈風
+ Slot3 烈風
+ Slot4 -2
+必要制空値: 146 / 制空戦力: 146.9693845669907
+
+
+0
+編成
+1 蒼龍改二
+ Slot1 -1
+ Slot2 烈風
+ Slot3 烈風改
+ Slot4 -2
+2 飛龍改二
+ Slot1 烈風改
+ Slot2 烈風
+ Slot3 18
+ Slot4 -2
+3 大鳳
+ Slot1 18
+ Slot2 18
+ Slot3 18
+ Slot4 -2
+18 : 12
+1
+編成
+1 蒼龍改二
+ Slot1 -1
+ Slot2 烈風
+ Slot3 烈風改
+ Slot4 -2
+2 飛龍改二
+ Slot1 烈風改
+ Slot2 烈風
+ Slot3 烈風
+ Slot4 -2
+3 大鳳
+ Slot1 18
+ Slot2 18
+ Slot3 18
+ Slot4 -2
+18 : 10
+2
+編成
+1 蒼龍改二
+ Slot1 -1
+ Slot2 烈風
+ Slot3 烈風改
+ Slot4 -2
+2 飛龍改二
+ Slot1 烈風改
+ Slot2 烈風
+ Slot3 烈風
+ Slot4 -2
+3 大鳳
+ Slot1 烈風
+ Slot2 18
+ Slot3 18
+ Slot4 -2
+18 : 10
+3
+編成
+1 蒼龍改二
+ Slot1 -1
+ Slot2 烈風
+ Slot3 烈風改
+ Slot4 -2
+2 飛龍改二
+ Slot1 烈風改
+ Slot2 烈風
+ Slot3 烈風
+ Slot4 -2
+3 大鳳
+ Slot1 烈風
+ Slot2 烈風
+ Slot3 18
+ Slot4 -2
+18 : 10
+編成
+1 蒼龍改二
+ Slot1 -1
+ Slot2 烈風
+ Slot3 烈風改
+ Slot4 -2
+2 飛龍改二
+ Slot1 烈風改
+ Slot2 烈風
+ Slot3 烈風
+ Slot4 -2
+3 大鳳
+ Slot1 烈風
+ Slot2 烈風
+ Slot3 18
+ Slot4 -2
+必要制空値: 146 / 制空戦力: 169.70562748477138
+
+

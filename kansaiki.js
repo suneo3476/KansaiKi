@@ -73,7 +73,7 @@ var kokukanMust = {
 	"蒼龍":0,	"蒼龍改":0,	 	"蒼龍改二": 		1,
 	"飛龍":0,	"飛龍改":0,	 	"飛龍改二": 		1,
 	"翔鶴":0,	"翔鶴改":0,
-	"瑞鶴":0,	"瑞鶴改":1,
+	"瑞鶴":0,	"瑞鶴改":0,
 	"雲龍":0,	"雲龍改":0,
 	"大鳳":0,	"大鳳改":0,
 	"鳳翔":0,	"鳳翔改":0,
@@ -656,8 +656,10 @@ for(var i=0; i<kokukanCombi.length; i++){
 	/* 艦載機の数が多いスロットから装備を埋めていく */
 	var currentForce = 0;
 	var result = [];
-	result = result.concat(kokukanCombi[i]);
+	result = result.concat(combi);
+	var c=0;
 	while(currentForce < requireForce && kansaiki.length > 0){
+		console.log(c++);
 		//艦娘ごとに一番艦載機の数が多いスロットを1つ選ぶ
 		var maxSlot = [0,0,0,0,0,0];
 		for(var j=0; j<combi.length; j++){
@@ -676,12 +678,19 @@ for(var i=0; i<kokukanCombi.length; i++){
 				if(numOfPlanes == numOfTargetPlanes){
 					combi[j]['slot'][s] = 0;
 					result[j]['name'] = combi[j]['name'];
-					result[j]['slot'] = ['','','',''];
 					result[j]['slot'][s] = kansaiki.slice(0,1)[0]['name'];
+	console.log('編成');
+	for(var j=0; j<combi.length; j++){
+		console.log((j+1)+" "+combi[j]['name']);
+		for(var s=0; s<4; s++){
+			console.log(" Slot"+(s+1)+" "+combi[j]['slot'][s]);
+		}
+	}
 					break findTargetSlot;
 				}
 			}
 		}
+		console.log(numOfTargetPlanes+" : "+(kansaiki.shift())['AA']);
 		currentForce += Math.sqrt(numOfTargetPlanes)*(kansaiki.shift())['AA'];
 	}
 	console.log('編成');
@@ -691,13 +700,13 @@ for(var i=0; i<kokukanCombi.length; i++){
 			console.log(" Slot"+(s+1)+" "+combi[j]['slot'][s]);
 		}
 	}
-	console.log("制空戦力\t"+currentForce+"\n");
+	console.log("必要制空値: "+requireForce+" / 制空戦力: "+currentForce+"\n");
+	console.log();
 }
 
 //組み合わせ一覧
 // console.log(kokukanCombi);
 //残り装備
- console.log(kansaiki);
 
 
 
