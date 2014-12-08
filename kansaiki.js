@@ -1,42 +1,39 @@
-var util = require('util');
-/* 提督は出撃情報、艦娘、艦載機・水上機を教えて下さい*/
+/* このスクリプトは装備の最適解を出すものではなく、意思決定を早めるためのツールです */
+/* 当スクリプトの出力結果に対する判断は利用した提督の責任とします */
 
+/* 提督！各種情報を教えてください */
+
+/* - 出撃情報 - */
 /* どこに出撃しますか？ */
 /* 例：2-2 */
-var attackMap = "4-2";
-
-/* 開幕航空戦での制空権はどうしますか？ */
+var attackMap = "5-2";
+/* どれぐらいの制空戦力を希望しますか？ */
 /* 航空優勢:0,制空権確保:1 */
 var skywarLevel = 1;
-
-/* 被撃墜分を考慮してどのぐらい制空戦力を底上げしますか？ */
-/* デフォルトは10でいいと思いますが適宜調整してください */
+/* 被撃墜分が考慮されますが,制空戦力をどのぐらい底上げしますか？ */
+/* デフォルト:10ですが適宜調整してください */
 var skywarForceBias = 10;
 
-/* 艦戦以外を積むスロットを1隻あたり最大でいくつ残しますか？ */
-/* 0にすると攻撃不可能です */
-var numOfExtraSlots = 1;
-
-/* 彩雲or二式艦上偵察機を載せますか？ */
+/* - 装備情報 - */
+/* 彩雲または二式艦上偵察機を載せますか？ */
 /* 両機載せる:2 *//* 片方だけ:1 *//* 載せない:0 */
 var numOfSpyAircrafts = 1;
+/* 艦攻・艦爆を積むために1隻あたり何スロット残しますか？ */
+/* 0では攻撃不可能になります */
+var numOfExtraSlots = 2;
+/* 艦攻・艦爆を積むスロットの艦載機の数は多くしますか？少なくしますか？ */
+/* 多い:1 少ない:0 */
+var savingPlanes = 1;
 
-/* 艦載機の数が多いスロットを1隻あたりいくつ節約しますか？ */
-/* する:数字　しない:0 */
-var numOfSavingSlots = 1;
-
-/* 艦種ごとの編成に入れる隻数 */
-/* 以下を満たして設定してください */
-var numOfSeiki = 2;/*正規空母*/ /*装甲空母は正規空母にカウントします*/
+/* - 編成情報 - */
+/* 艦種ごとに何隻の艦娘を編成しますか？ */
+var numOfSeiki = 2;	/*正規空母*//*装甲空母もここにカウントします*/
 var numOfKei = 1;	/*軽空母*/
-
-/* 今のところ航空艦の入力はなしでお願いします… */
+/* ここはゆくゆく実装しますので、今のところ航空艦の入力はなしでお願いします… */
 var numOfSenkan = 0;	/*航空戦艦*/
 var numOfJunyokan = 0;	/*航空巡洋艦*/
 
-/* 現在この kanmusuInput は廃止しています. */
-/* 下の requireKanmusuInput と上の各艦種の艦数を揃えれば問題ありません */
-/* 出撃可能な艦娘情報を入力 */
+/* 出撃可能な艦娘を選んでもらう…はずですが、ここは無視して下の必須艦で指定してもらいます */
 /* "名前":0or1(不可能:0,可能:1) */
 var kanmusuInput = {
 	/* 正規空母 */
@@ -73,13 +70,13 @@ var kanmusuInput = {
 	"筑摩改二":0
 }
 
-/* 必ず出撃させる艦娘を入力(艦数との整合性に注意) */
-/* "名前":0or1(必ず出撃する:1,そうでもない:0) */
+/* 編成に組み込む艦娘を全てここで指定してください.上のは無視してください. */
+/* "名前":0or1(必ず組み込む:1,違う:0) */
 var requiredKanmusuInput = {
 	/* 正規空母 */
 	"赤城":0,	"赤城改":0,
 	"加賀":0,	"加賀改":0,
-	"蒼龍":0,	"蒼龍改":0,	 	"蒼龍改二": 		1,
+	"蒼龍":0,	"蒼龍改":0,	 	"蒼龍改二": 		0,
 	"飛龍":0,	"飛龍改":0,	 	"飛龍改二": 		0,
 	"翔鶴":0,	"翔鶴改":0,
 	"瑞鶴":0,	"瑞鶴改":1,
@@ -310,6 +307,7 @@ var allSuibaku = [
 
 /* マップの航空優勢・制空権確保にあたる制空値 */
 /* "マップ":[航空優勢,制空権確保] */
+var mapSeikuStr = ['航空優勢','制空権確保'];
 var mapSeiku = {
 	"1-4":[30,60],
 	"1-5":[36,72],
@@ -603,14 +601,14 @@ for(var key in sobiInput){
 		for(var i=0; i<sobiInput[key]; i++){
 			var obj = {};
 			obj['name'] = key;
-			obj['AA'] = sobiTaiku[key];
+			obj['taiku'] = sobiTaiku[key];
 			allSobi.push(obj);
 		}
 	}
 }
 allSobi.sort(function (a,b){
-	var x = a['AA'];
-	var y = b['AA'];
+	var x = a['taiku'];
+	var y = b['taiku'];
 	return y-x;
 });
 
@@ -630,6 +628,7 @@ for(var i=0; i<allKanmusuCombi.length; i++){
 	}
 }
 
+var result = [];
 /* 組合せごとに最適な装備の組合せを探していく　*/
 for(var i=0; i<resultKanmusuCombi.length; i++){
 	var combi = resultKanmusuCombi[i].concat();
@@ -685,7 +684,7 @@ for(var i=0; i<resultKanmusuCombi.length; i++){
 		sobi[j] = new Array(allSobi[j].length);
 		var obj = {};
 		obj['name'] = allSobi[j]['name'].concat();
-		obj['AA'] = allSobi[j]['AA'];
+		obj['taiku'] = allSobi[j]['taiku'];
 		sobi[j] = obj;
 	}
 	var kansen = sobi.filter(function(elem){return isKansen(elem['name']);});
@@ -695,23 +694,28 @@ for(var i=0; i<resultKanmusuCombi.length; i++){
 
 	/* (空母のみ)艦攻・艦爆スロットを決める */
 	if(numOfExtraSlots > 0){
-		/* 艦載機の数が少ないスロットを探す */
-		var minSlot = [];
+		/* 艦載機の数が多い・少ないスロットを探す */
+		var maxOrMinSlot = [];
 		for(var j=0; j<combi.length; j++){
-			minSlot[j] = [];
-			minSlot[j].push(combi[j]['slot'].slice().sort(function(a,b){return a>b;}));
-			var notZeroIndex = minSlot[j][0].indexOf(0)+1;
-			minSlot[j] = minSlot[j][0].slice(notZeroIndex);
-			minSlot[j] = minSlot[j]	.slice(0,numOfSavingSlots);
+			/* 一番多い・少ないスロットでソートしたスロットの先頭から、欲しい艦攻・艦爆の数だけ残す */
+			maxOrMinSlot[j] = [];
+			if(savingPlanes==0)
+				maxOrMinSlot[j].push(combi[j]['slot'].slice().sort(function(a,b){return a>b;}));
+			else if(savingPlanes==1)
+				maxOrMinSlot[j].push(combi[j]['slot'].slice().sort(function(a,b){return a<b;}));
+			maxOrMinSlot[j] = maxOrMinSlot[j][0].filter(function(value, index){
+				return value!=0;
+			});
+			maxOrMinSlot[j] = maxOrMinSlot[j].slice(0,numOfExtraSlots);
 		}
 		/* 艦娘ごとに空母かどうか調べ、艦攻・艦爆用のスロットを決める */
 		for(var j=0; j<combi.length; j++){
 			if(!isKubo(combi[j]['name']))
 				continue;
-			for(var k=0; k<minSlot[j].length; k++){
+			for(var k=0; k<maxOrMinSlot[j].length; k++){
 				findSavingSlot:
 				for(var s=0; s<4; s++){
-					if(minSlot[j][k] == combi[j]['slot'][s]){
+					if(maxOrMinSlot[j][k] == combi[j]['slot'][s]){
 						combi[j]['sobi'][s] = '艦攻・艦爆';
 						combi[j]['slot'][s] = 0;
 						break findSavingSlot;
@@ -726,8 +730,16 @@ for(var i=0; i<resultKanmusuCombi.length; i++){
 	var currentSkywarForce = 0;
 	while(currentSkywarForce<(requiredSkywarForce+skywarForceBias)){
 		/* TODO 艦娘とスロットの選び方の考えなおし */
-		/* 必要なもの　targetKanmusu targetSlot targetSlotPlanes */
-
+		var filledSlots = [0,0,0,0,0,0].slice(0,combi.length);
+		var maxSlots = [];
+		for(var j=0; j<combi.length; j++)
+			maxSlots[j] = Math.max.apply(null,combi[j]['slot']);
+		var targetKanmusu = maxSlots.indexOf(Math.max.apply(null,maxSlots));
+ 		var targetSlot = combi[targetKanmusu]['slot'].indexOf(maxSlots[targetKanmusu]);
+		var targetPlanes = maxSlots[targetKanmusu];
+		/* 装備が埋まっていれば終了 */
+		if(targetPlanes==0)
+			break;
 		/* 艦種に応じて装備を選んで埋める */
 		var targetSobi = [];
 		if(isKubo(combi[targetKanmusu]['name'])){
@@ -737,24 +749,36 @@ for(var i=0; i<resultKanmusuCombi.length; i++){
 		}
 		combi[targetKanmusu]['sobi'][targetSlot] = targetSobi['name'];
 		combi[targetKanmusu]['slot'][targetSlot] = 0;
-		currentSkywarForce += Math.sqrt(targetSlotPlanes)*targetSobi['AA'];
+		currentSkywarForce += Math.sqrt(targetPlanes)*targetSobi['taiku'];
 		if(kansen.length<=0 || kankou.length<=0 | kanbaku.length<=0 || suibaku.length<=0)
 			break;
 	}
-	console.log('編成パターン:'+(i+1));
-	for(var j=0; j<combi.length; j++){
-		console.log(" "+(j+1)+" "+combi[j]['name']);
+	var obj ={};
+	obj['skywarForce'] = currentSkywarForce;
+	for(var j=0; j<combi.length; j++)
 		for(var s=0; s<4; s++)
-			console.log("  Slot"+(s+1)+" "+allKanmusuCombi[i][j]['slot'][s]+" "+combi[j]['sobi'][s]);
-		console.log()
-	}
-	console.log("必要制空値: "+requiredSkywarForce+" + 非撃墜分バイアス: "+skywarForceBias+" / 制空戦力: "+Math.floor(currentSkywarForce)+"\n");
-	if(requiredSkywarForce+skywarForceBias>currentSkywarForce){
-		console.log("制空戦力が足りません.\nnumOfExtraSlots(未実装) または\nnumOfSpyAircrafts または\nnumOfSavingSlots を減らすと良いでしょう.");
-	}
-	console.log();
+			combi[j]['slot'][s] = allKanmusuCombi[i][j]['slot'][s];
+	obj['fleet'] = combi;
+	obj['skywarForce'] = currentSkywarForce;
+	result.push(obj);
 }
 
-//組み合わせ一覧
-// console.log(allKanmusuCombi);
-//残り装備
+/* 出力 */
+console.log("出撃マップ: "+attackMap);
+console.log("希望制空権: "+mapSeikuStr[skywarLevel]);
+console.log("制空値:"+requiredSkywarForce+" + 被撃墜分バイアス:"+skywarForceBias);
+console.log("------------------------------------------------------------");
+for(var i=0; i<result.length; i++){
+	console.log('編成パターン:'+(i+1)+ " 制空戦力:"+Math.floor(result[i]['skywarForce'])+" / 制空値:"+requiredSkywarForce+" + 被撃墜分バイアス:"+skywarForceBias);
+	console.log();
+	if(requiredSkywarForce+skywarForceBias>result[i]['skywarForce'])
+		console.log("制空戦力が足りません. numOfExtraSlots, numOfSpyAircrafts を減らすか,\nsavingSlots を0にすると良いでしょう.");
+	console.log();
+	for(var j=0; j<result[i]['fleet'].length; j++){
+		console.log(" "+(j+1)+" "+result[i]['fleet'][j]['name']);
+		for(var s=0; s<4; s++)
+			console.log("  Slot"+(s+1)+" "+result[i]['fleet'][j]['slot'][s]+" "+result[i]['fleet'][j]['sobi'][s]);
+	}
+	console.log("------------------------------");
+}
+
